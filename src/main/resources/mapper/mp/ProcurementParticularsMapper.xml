@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wy.mp.mapper.ProcurementParticularsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wy.mp.entity.ProcurementParticulars">
+        <id column="id" property="id" />
+        <result column="procurement_serial_number" property="procurementSerialNumber" />
+        <result column="procurement_variety_number" property="procurementVarietyNumber" />
+        <result column="drugstore_name" property="drugstoreName" />
+        <result column="username" property="username" />
+        <result column="date" property="date" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="version" property="version" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, procurement_serial_number, procurement_variety_number, drugstore_name, username, date, status, create_time, update_time, version, deleted
+    </sql>
+
+    <select id="queryPage" resultType="com.wy.mp.entity.ProcurementParticulars" parameterType="map">
+        SELECT * FROM procurement_particulars
+        <where>
+        <if test="paramMap.startDate!=null and paramMap.endDate!=null and paramMap.startDate!='' and paramMap.endDate!=''">
+            AND <![CDATA[ (DATE_FORMAT(date,'%Y-%m-%d') >= #{paramMap.startDate}
+            AND DATE_FORMAT(date,'%Y-%m-%d') <= #{paramMap.endDate}) ]]>
+        </if>
+
+        <if test="paramMap.status!=null and paramMap.status!=''">
+            AND status=#{paramMap.status}
+        </if>
+        </where>
+        ORDER BY id
+    </select>
+</mapper>
