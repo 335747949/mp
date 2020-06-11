@@ -1,7 +1,10 @@
 package com.wy.mp.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -47,8 +50,10 @@ public class ProcurementParticulars implements Serializable {
     @ApiModelProperty(value = "0：已提交，1：待确认，2：带传输")
     private Integer status;
 
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
     @ApiModelProperty(value = "标记乐观锁")

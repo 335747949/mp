@@ -9,6 +9,7 @@ import com.wy.mp.util.PageUtil;
 import com.wy.mp.util.QueryUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -33,5 +34,10 @@ public class ProcurementParticularsServiceImpl extends ServiceImpl<ProcurementPa
         List<ProcurementParticulars> list = baseMapper.queryPage(page,param);
         page.setRecords(list);
         return new PageUtil(page);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        removeById(id);
     }
 }

@@ -17,4 +17,6 @@ import java.util.Map;
 public interface ProcurementParticularsService extends IService<ProcurementParticulars> {
 
     PageUtil queryPage(Map<String ,Object> param);
+
+    void delete(Integer ids);
 }
