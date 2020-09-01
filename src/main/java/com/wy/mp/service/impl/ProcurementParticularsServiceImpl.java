@@ -1,5 +1,6 @@
 package com.wy.mp.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.wy.mp.entity.ProcurementParticulars;
 import com.wy.mp.mapper.ProcurementParticularsMapper;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -27,12 +29,25 @@ public class ProcurementParticularsServiceImpl extends ServiceImpl<ProcurementPa
     @Override
     public PageUtil queryPage(Map<String, Object> param) {
 
-        IPage page = new QueryUtil<ProcurementParticulars>().getQueryPage(param);
+/*        IPage page = new QueryUtil<ProcurementParticulars>().getQueryPage(param);
 //        IPage resPage = page(page,null);
 //        return new PageUtil(resPage);
 
         List<ProcurementParticulars> list = baseMapper.queryPage(page,param);
         page.setRecords(list);
+        return new PageUtil(page);*/
+
+        /**
+         * 直接获取拿到的参数，进行模糊分页查询，无需自己写自定义sql；
+         */
+        //设置查询条件
+        QueryWrapper<ProcurementParticulars> wrapper = new QueryWrapper<>();
+        Set<String> set = param.keySet();
+        for (String key : set) {
+            wrapper.eq(param.get(key) != null,key,param.get(key));
+        }
+        IPage<ProcurementParticulars> queryPage = new QueryUtil<ProcurementParticulars>().getQueryPage(param);
+        IPage<ProcurementParticulars> page = baseMapper.selectPage(queryPage, wrapper);
         return new PageUtil(page);
     }
 
